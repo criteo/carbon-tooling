@@ -1,0 +1,14 @@
+global:
+  scrape_interval: 1s
+  evaluation_interval: 1s
+scrape_configs:
+- job_name: sink-test
+  static_configs:
+  - targets:
+    - sink:2112
+- job_name: injector-test
+  static_configs:
+  - targets:
+    - injector:2112
+rule_files:
+  - alert.rules

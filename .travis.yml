@@ -1,0 +1,7 @@
+language: go
+go: 1.12.x
+script:
+  - make build-injector
+  - make build-sink
+  - make build-injector-docker
+  - make build-sink-docker

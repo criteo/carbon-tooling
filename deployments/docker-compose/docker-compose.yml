@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  injector:
+    build:
+      context: ../..
+      dockerfile: ./build/injector/Dockerfile
+    environment:
+    - SLEEP_TIME=1ms
+  sink:
+    build:
+      context: ../..
+      dockerfile: ./build/sink/Dockerfile
+  carbon-relay-ng:
+    image: criteo-carbon-relay-ng
+    volumes:
+      - ./carbon-relay-ng/:/conf/
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2048M
+  prometheus:
+    image: "prom/prometheus"
+    volumes:
+      - "./prometheus:/etc/prometheus"
+    ports:
+      - 9090:9090

@@ -1,0 +1,13 @@
+groups:
+  - name: example
+    rules:
+      - alert: HighMetricsLost
+        expr: max(injector_metrics_sent_total)/max(sink_metrics_received_total) > 1.01 or max(injector_metrics_sent_total)/max(sink_metrics_received_total) < 0.99
+        for: 1m
+        annotations:
+          summary: Sink component do not receive all the metrics from the injector.
+      - alert: HighLatency
+        expr: histogram_quantile(0.95, sum(rate(sink_metrics_duration_seconds_bucket[1m])) by (le)) > 0.01
+        for: 1m
+        annotations:
+          summary: Latency between Injector and Sink component.
